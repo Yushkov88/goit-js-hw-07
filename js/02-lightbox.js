@@ -4,20 +4,19 @@ import { galleryItems } from './gallery-items.js';
 const gallery = document.querySelector('.gallery');
 
 function renderGallery() {
-  const galleryItemsHtml = galleryItems.reduce(
-    (acc, { description, original, preview }) => {
+  const galleryItemsHtml = galleryItems.map(
+    ({ description, original, preview }) => {
       const galleryItem = `      
       <a class="gallery__item" href="${original}">
         <img class="gallery__image" src="${preview}" alt="${description}" />
       </a>      
     `;
 
-      return acc + galleryItem;
+      return galleryItem;
     },
-    '',
   );
 
-  gallery.insertAdjacentHTML('beforeend', galleryItemsHtml);
+  gallery.insertAdjacentHTML('beforeend', galleryItemsHtml.join(''));
 }
 
 renderGallery();

@@ -8,8 +8,8 @@ const modalImage = modal.element().querySelector('img');
 const gallery = document.querySelector('.gallery');
 
 function renderGallery() {
-  const galleryItemsHtml = galleryItems.reduce(
-    (acc, { original, preview, description }) => {
+  const galleryItemsHtml = galleryItems.map(
+    ({ original, preview, description }) => {
       const galleryItem = `
       <div class="gallery__item">
         <a class="gallery__link" href="${original}">
@@ -23,20 +23,19 @@ function renderGallery() {
       </div>
     `;
 
-      return acc + galleryItem;
+      return galleryItem;
     },
-    '',
   );
 
-  gallery.insertAdjacentHTML('beforeend', galleryItemsHtml);
+  gallery.insertAdjacentHTML('beforeend', galleryItemsHtml.join(''));
 }
 
 gallery.addEventListener('click', event => {
+  event.preventDefault();
+
   if (event.target.nodeName !== 'IMG') {
     return;
   }
-
-  event.preventDefault();
 
   modalImage.src = event.target.parentNode.href;
   modalImage.alt = event.target.alt;
